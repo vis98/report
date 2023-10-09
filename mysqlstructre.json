@@ -1,0 +1,128 @@
+{
+    "processing": {
+      "reportType": "Normal",
+      "commanCriteria": {
+        "dbs": ["config", "hr"],
+        "columns": ["user.id", "attendance.employeeId"]
+      },
+      "columns": [{
+        "label": "Name",
+        "type": "simple",
+        "value": "config.table2.field3",
+        "format": [{
+          "instruction": "style",
+          "value": "bold"
+        }, {
+          "instruction": "prefix",
+          "value": "Mr. "
+        }]
+      }, {
+        "label": "Total",
+        "type": "derived",
+        "formula": "config.User.hourlyCost*hr.attendance.hours",
+        
+      }]
+    },
+    "config": {
+      "User": {
+        "fields": ["id", "username", "hourlyCost"]
+      }
+    },
+    "hr": {
+      "attendance": {
+        "fields": ["employeeId", "hours", "date"]
+      }
+    }
+  }
+
+// DATA fetched
+// Fetch1
+data1 = [{id:1, username:'vishal', hourlyCost:'22'},
+{id:2, username:'vishal2', hourlyCost:'12'}
+{id:3, username:'vishal3', hourlyCost:'22'}
+{id:4, username:'vishal4', hourlyCost:'42'}]
+
+// Fetch2
+data2 = [{employeeId:1, hours:'20', date:'22/3/22'},
+{employeeId:2, hours:'10', date:'22/3/22'}
+{employeeId:3, hours:'20', date:'22/3/22'}
+{employeeId:4, hours:'30', date:'22/3/22'}
+{employeeId:5, hours:'40', date:'22/3/22'}]
+
+
+// if 1 to 1 mapping
+for(let i=0;i<data1.length, i++){
+    let columnValue = data1[i][]
+}
+
+{
+    reportType: "Summary",
+    groupBy: "product.id",
+    columns: [{
+        label: "Product Name",
+        type: "simple",
+        value: "product.name",
+        format: [{
+            instruction: "style",
+            value: "bold"
+        },{
+            instruction: "prefix",
+            value: "Mr. "
+        }]
+    },{
+        label: "Total Price Average",
+        field: "order.total",
+        function: "AVG",
+    }]
+}
+
+
+
+
+reportID:123
+processing: {
+        reportType: "Normal",
+        commanCriteria : {dbs:["Accounting", "Stock"], columns:[Orders.ProductID, Product.ID]}
+            columns: [{
+                label: "Username",
+                type: "simple",
+                value: "Accounting.Order.tbl-User.userId.username",
+            }, {
+                label: "Qty",
+                type: "simple",
+                value: "Accounting.Order.Qty",
+            },
+            {
+                label: "Total",
+                type: "simple",
+                value: "Accounting.Order.Total",
+            },
+            {
+                label: "Product Name",
+                type: "simple",
+                value: "Stock.Product.Name",
+            },
+            {
+                label: "Product Price",
+                type: "simple",
+                value: "Stock.Product.Price",
+            }
+            ]
+}
+
+Accounting: {
+    Order:{
+        fields: [Qty, Total, ProductId, userId],
+        selectAs: ["Accounting.Order.Qty","","",""]
+        User:{
+            fields:[username],
+            relation:[]
+        }
+    }
+}
+
+Stock: {
+    Product:{
+        fields: [ID, name, price]
+    }
+}
